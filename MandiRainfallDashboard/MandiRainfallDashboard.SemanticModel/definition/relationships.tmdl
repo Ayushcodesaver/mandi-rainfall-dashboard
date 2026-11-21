@@ -1,0 +1,19 @@
+relationship 'Market Prices to Dim Commodity'
+	fromColumn: 'Market Prices'.Commodity
+	toColumn: 'Dim Commodity'.Commodity
+
+relationship 'MSP Analysis to Dim Commodity'
+	fromColumn: 'MSP Analysis'.Commodity
+	toColumn: 'Dim Commodity'.Commodity
+
+relationship 'Latest Prices to Market Prices'
+	fromColumn: 'Latest Prices'.'Price Key'
+	toColumn: 'Market Prices'.'Price Key'
+
+relationship 'Daily Rainfall to Dim District'
+	fromColumn: 'Daily Rainfall'.'District Key'
+	toColumn: 'Dim District'.'District Key'
+
+relationship 'Monthly Rainfall to Dim District'
+	fromColumn: 'Monthly Rainfall'.'District Key'
+	toColumn: 'Dim District'.'District Key'

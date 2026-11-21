@@ -1,0 +1,8 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.0.0/schema.json",
+  "name": "3430a1fd76a5596081b821e6d833b540",
+  "displayName": "Market Explorer",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280
+}

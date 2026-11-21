@@ -1,0 +1,89 @@
+table 'Market Prices'
+
+	/// Total number of price records captured across mandis
+	measure 'Mandi Records' = SUM('Market Prices'[Records])
+		formatString: #,0
+
+	/// Average traded price across markets
+	measure 'Avg Market Price' = AVERAGE('Market Prices'[Average Price])
+		formatString: ₹ #,0
+
+	/// Lowest minimum price across markets
+	measure 'Min Market Price' = MIN('Market Prices'[Minimum Price])
+		formatString: ₹ #,0
+
+	/// Highest maximum price across markets
+	measure 'Max Market Price' = MAX('Market Prices'[Maximum Price])
+		formatString: ₹ #,0
+
+	/// Number of distinct mandi markets reporting
+	measure 'Markets Count' = DISTINCTCOUNT('Market Prices'[Market])
+		formatString: #,0
+
+	/// Number of distinct commodities traded
+	measure 'Commodities Count' = DISTINCTCOUNT('Market Prices'[Commodity])
+		formatString: #,0
+
+	/// Number of states with reporting markets
+	measure 'States Count' = DISTINCTCOUNT('Market Prices'[State])
+		formatString: #,0
+
+	column State
+		dataType: string
+		summarizeBy: none
+		sourceColumn: State
+
+	column District
+		dataType: string
+		summarizeBy: none
+		sourceColumn: District
+
+	column Market
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Market
+
+	column Commodity
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Commodity
+
+	column Records
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: Records
+
+	column 'Average Price'
+		dataType: double
+		summarizeBy: none
+		sourceColumn: 'Average Price'
+
+	column 'Minimum Price'
+		dataType: double
+		summarizeBy: none
+		sourceColumn: 'Minimum Price'
+
+	column 'Maximum Price'
+		dataType: double
+		summarizeBy: none
+		sourceColumn: 'Maximum Price'
+
+	column 'Price Key'
+		dataType: string
+		isHidden
+		summarizeBy: none
+		sourceColumn: 'Price Key'
+
+	partition 'Market Prices' = m
+		mode: import
+		source =
+			let
+			    Source = Csv.Document(File.Contents("C:/Users/sharm/Downloads/powerbi/New_Query_2026_11_21_18_14_03.csv"), [Delimiter=",", Columns=8, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+			    PromotedHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+			    RemovedBlank = Table.SelectRows(PromotedHeaders, each [state_name] <> null and [state_name] <> ""),
+			    ReplacedNulls = Table.ReplaceValue(RemovedBlank, "null", "Unknown", Replacer.ReplaceValue, {"cmdt_name"}),
+			    ChangedType = Table.TransformColumnTypes(ReplacedNulls, {{"state_name", type text}, {"district_name", type text}, {"market_name", type text}, {"cmdt_name", type text}, {"total_records", Int64.Type}, {"average_price", type number}, {"minimum_price", type number}, {"maximum_price", type number}}),
+			    RenamedColumns = Table.RenameColumns(ChangedType, {{"state_name", "State"}, {"district_name", "District"}, {"market_name", "Market"}, {"cmdt_name", "Commodity"}, {"total_records", "Records"}, {"average_price", "Average Price"}, {"minimum_price", "Minimum Price"}, {"maximum_price", "Maximum Price"}}),
+			    AddedKey = Table.AddColumn(RenamedColumns, "Price Key", each Text.Combine({Text.Lower([State]), "|", Text.Lower([District]), "|", Text.Lower([Market]), "|", Text.Lower([Commodity])}), type text)
+			in
+			    AddedKey

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "MandiRainfallDashboard"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "2d306211-df4d-8a53-a983-f070ad9485e9"
+  }
+}

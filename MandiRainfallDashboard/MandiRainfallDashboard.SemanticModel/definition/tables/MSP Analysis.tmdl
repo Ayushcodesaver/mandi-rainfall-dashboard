@@ -1,0 +1,64 @@
+table 'MSP Analysis'
+
+	/// Number of commodities compared against MSP
+	measure 'Commodities Tracked' = COUNTROWS('MSP Analysis')
+		formatString: #,0
+
+	/// Average MSP across commodities
+	measure 'Avg MSP' = AVERAGE('MSP Analysis'[Average MSP])
+		formatString: ₹ #,0
+
+	/// Average market price per commodity
+	measure 'Avg Commodity Market Price' = AVERAGE('MSP Analysis'[Avg Market Price])
+		formatString: ₹ #,0
+
+	/// Average gap between market price and MSP
+	measure 'Avg Price Gap vs MSP' = AVERAGE('MSP Analysis'[Price Difference])
+		formatString: ₹ #,0
+
+	/// Commodities trading above MSP on average
+	measure 'Commodities Above MSP' = CALCULATE(COUNTROWS('MSP Analysis'), 'MSP Analysis'[Price Difference] > 0)
+		formatString: #,0
+
+	/// Commodities trading below MSP on average
+	measure 'Commodities Below MSP' = CALCULATE(COUNTROWS('MSP Analysis'), 'MSP Analysis'[Price Difference] < 0)
+		formatString: #,0
+
+	column Commodity
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Commodity
+
+	column 'Avg Market Price'
+		dataType: double
+		summarizeBy: none
+		sourceColumn: 'Avg Market Price'
+
+	column 'Average MSP'
+		dataType: double
+		summarizeBy: none
+		sourceColumn: 'Average MSP'
+
+	column Records
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: Records
+
+	column 'Price Difference'
+		dataType: double
+		summarizeBy: none
+		sourceColumn: 'Price Difference'
+
+	partition 'MSP Analysis' = m
+		mode: import
+		source =
+			let
+			    Source = Csv.Document(File.Contents("C:/Users/sharm/Downloads/powerbi/Commodity MSP Analysis.csv"), [Delimiter=",", Columns=5, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+			    PromotedHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+			    RemovedBlank = Table.SelectRows(PromotedHeaders, each [cmdt_name] <> null and [cmdt_name] <> ""),
+			    ReplacedNulls = Table.ReplaceValue(RemovedBlank, "null", null, Replacer.ReplaceValue, {"average_msp", "price_difference"}),
+			    ReplacedCommodity = Table.ReplaceValue(ReplacedNulls, "null", "Unknown", Replacer.ReplaceValue, {"cmdt_name"}),
+			    ChangedType = Table.TransformColumnTypes(ReplacedCommodity, {{"cmdt_name", type text}, {"average_market_price", type number}, {"average_msp", type number}, {"total_records", Int64.Type}, {"price_difference", type number}}),
+			    RenamedColumns = Table.RenameColumns(ChangedType, {{"cmdt_name", "Commodity"}, {"average_market_price", "Avg Market Price"}, {"average_msp", "Average MSP"}, {"total_records", "Records"}, {"price_difference", "Price Difference"}})
+			in
+			    RenamedColumns

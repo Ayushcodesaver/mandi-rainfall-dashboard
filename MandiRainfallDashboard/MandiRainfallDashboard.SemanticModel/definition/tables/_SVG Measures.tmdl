@@ -1,0 +1,311 @@
+table '_SVG Measures'
+
+	/// SVG page header: MANDI MARKET INTELLIGENCE
+	measure P1_Header = ```
+		VAR _Title = "MANDI MARKET INTELLIGENCE"
+		VAR _Sub = "Overview - prices, markets and commodity coverage"
+		VAR _Bg = "%231B2A38"
+		VAR _Accent = "%23FDBF11"
+		VAR _White = "%23FFFFFF"
+		VAR _Muted = "%23A9B6C2"
+		RETURN
+		    "data:image/svg+xml;charset=utf-8,"
+		        & "<svg width='100%%25' height='100%%25' viewBox='0 0 1280 64' overflow='visible' display='block' xmlns='http://www.w3.org/2000/svg'>"
+		        & "<rect x='0' y='0' width='1280' height='64' fill='" & _Bg & "'/>"
+		        & "<rect x='0' y='60' width='240' height='4' fill='" & _Accent & "'/>"
+		        & "<text x='24' y='40' font-family='Segoe UI Semibold' font-size='20' letter-spacing='0.5' fill='" & _White & "'>" & _Title & "</text>"
+		        & "<text x='1256' y='40' text-anchor='end' font-family='Segoe UI' font-size='12' fill='" & _Muted & "'>" & _Sub & "</text>"
+		        & "</svg>"
+		```
+		dataCategory: ImageUrl
+		formatString: General
+
+	/// SVG page header: PRICE VS MSP ANALYSIS
+	measure P2_Header = ```
+		VAR _Title = "PRICE VS MSP ANALYSIS"
+		VAR _Sub = "Where markets trade against government support prices"
+		VAR _Bg = "%231B2A38"
+		VAR _Accent = "%23FDBF11"
+		VAR _White = "%23FFFFFF"
+		VAR _Muted = "%23A9B6C2"
+		RETURN
+		    "data:image/svg+xml;charset=utf-8,"
+		        & "<svg width='100%%25' height='100%%25' viewBox='0 0 1280 64' overflow='visible' display='block' xmlns='http://www.w3.org/2000/svg'>"
+		        & "<rect x='0' y='0' width='1280' height='64' fill='" & _Bg & "'/>"
+		        & "<rect x='0' y='60' width='240' height='4' fill='" & _Accent & "'/>"
+		        & "<text x='24' y='40' font-family='Segoe UI Semibold' font-size='20' letter-spacing='0.5' fill='" & _White & "'>" & _Title & "</text>"
+		        & "<text x='1256' y='40' text-anchor='end' font-family='Segoe UI' font-size='12' fill='" & _Muted & "'>" & _Sub & "</text>"
+		        & "</svg>"
+		```
+		dataCategory: ImageUrl
+		formatString: General
+
+	/// SVG page header: MARKET EXPLORER
+	measure P3_Header = ```
+		VAR _Title = "MARKET EXPLORER"
+		VAR _Sub = "Every mandi, every commodity - slice and search"
+		VAR _Bg = "%231B2A38"
+		VAR _Accent = "%23FDBF11"
+		VAR _White = "%23FFFFFF"
+		VAR _Muted = "%23A9B6C2"
+		RETURN
+		    "data:image/svg+xml;charset=utf-8,"
+		        & "<svg width='100%%25' height='100%%25' viewBox='0 0 1280 64' overflow='visible' display='block' xmlns='http://www.w3.org/2000/svg'>"
+		        & "<rect x='0' y='0' width='1280' height='64' fill='" & _Bg & "'/>"
+		        & "<rect x='0' y='60' width='240' height='4' fill='" & _Accent & "'/>"
+		        & "<text x='24' y='40' font-family='Segoe UI Semibold' font-size='20' letter-spacing='0.5' fill='" & _White & "'>" & _Title & "</text>"
+		        & "<text x='1256' y='40' text-anchor='end' font-family='Segoe UI' font-size='12' fill='" & _Muted & "'>" & _Sub & "</text>"
+		        & "</svg>"
+		```
+		dataCategory: ImageUrl
+		formatString: General
+
+	/// SVG page header: RAINFALL MONITOR
+	measure P4_Header = ```
+		VAR _Title = "RAINFALL MONITOR"
+		VAR _Sub = "District-level rainfall against long-term normals"
+		VAR _Bg = "%231B2A38"
+		VAR _Accent = "%23FDBF11"
+		VAR _White = "%23FFFFFF"
+		VAR _Muted = "%23A9B6C2"
+		RETURN
+		    "data:image/svg+xml;charset=utf-8,"
+		        & "<svg width='100%%25' height='100%%25' viewBox='0 0 1280 64' overflow='visible' display='block' xmlns='http://www.w3.org/2000/svg'>"
+		        & "<rect x='0' y='0' width='1280' height='64' fill='" & _Bg & "'/>"
+		        & "<rect x='0' y='60' width='240' height='4' fill='" & _Accent & "'/>"
+		        & "<text x='24' y='40' font-family='Segoe UI Semibold' font-size='20' letter-spacing='0.5' fill='" & _White & "'>" & _Title & "</text>"
+		        & "<text x='1256' y='40' text-anchor='end' font-family='Segoe UI' font-size='12' fill='" & _Muted & "'>" & _Sub & "</text>"
+		        & "</svg>"
+		```
+		dataCategory: ImageUrl
+		formatString: General
+
+	/// SVG KPI card: States Covered
+	measure P1_States_KPI = ```
+		VAR _Title = "STATES COVERED"
+		VAR _Value = SUBSTITUTE(FORMAT([States Count], "#,0"), "%", "%25")
+		VAR _Sub = "States with reporting mandis"
+		VAR _Bg = "%231B2A38"
+		VAR _Accent = "%23FDBF11"
+		VAR _Muted = "%23A9B6C2"
+		VAR _White = "%23FFFFFF"
+		RETURN
+		    "data:image/svg+xml;charset=utf-8,"
+		        & "<svg width='100%25' height='100%25' viewBox='0 0 236 110' overflow='visible' display='block' xmlns='http://www.w3.org/2000/svg'>"
+		        & "<rect x='0' y='0' width='236' height='110' rx='10' fill='" & _Bg & "'/>"
+		        & "<rect x='0' y='8' width='5' height='94' fill='" & _Accent & "'/>"
+		        & "<text x='20' y='32' font-family='Segoe UI' font-size='11' letter-spacing='1.2' fill='" & _Muted & "'>" & _Title & "</text>"
+		        & "<text x='20' y='70' font-family='Segoe UI Semibold' font-size='27' fill='" & _White & "'>" & _Value & "</text>"
+		        & "<text x='20' y='92' font-family='Segoe UI' font-size='10' fill='" & _Muted & "'>" & _Sub & "</text>"
+		        & "</svg>"
+		```
+		dataCategory: ImageUrl
+		formatString: General
+
+	/// SVG KPI card: Mandi Markets
+	measure P1_Markets_KPI = ```
+		VAR _Title = "MANDI MARKETS"
+		VAR _Value = SUBSTITUTE(FORMAT([Markets Count], "#,0"), "%", "%25")
+		VAR _Sub = "Distinct markets reporting"
+		VAR _Bg = "%231B2A38"
+		VAR _Accent = "%23FDBF11"
+		VAR _Muted = "%23A9B6C2"
+		VAR _White = "%23FFFFFF"
+		RETURN
+		    "data:image/svg+xml;charset=utf-8,"
+		        & "<svg width='100%25' height='100%25' viewBox='0 0 236 110' overflow='visible' display='block' xmlns='http://www.w3.org/2000/svg'>"
+		        & "<rect x='0' y='0' width='236' height='110' rx='10' fill='" & _Bg & "'/>"
+		        & "<rect x='0' y='8' width='5' height='94' fill='" & _Accent & "'/>"
+		        & "<text x='20' y='32' font-family='Segoe UI' font-size='11' letter-spacing='1.2' fill='" & _Muted & "'>" & _Title & "</text>"
+		        & "<text x='20' y='70' font-family='Segoe UI Semibold' font-size='27' fill='" & _White & "'>" & _Value & "</text>"
+		        & "<text x='20' y='92' font-family='Segoe UI' font-size='10' fill='" & _Muted & "'>" & _Sub & "</text>"
+		        & "</svg>"
+		```
+		dataCategory: ImageUrl
+		formatString: General
+
+	/// SVG KPI card: Commodities
+	measure P1_Commodities_KPI = ```
+		VAR _Title = "COMMODITIES"
+		VAR _Value = SUBSTITUTE(FORMAT([Commodities Count], "#,0"), "%", "%25")
+		VAR _Sub = "Traded commodities tracked"
+		VAR _Bg = "%231B2A38"
+		VAR _Accent = "%23FDBF11"
+		VAR _Muted = "%23A9B6C2"
+		VAR _White = "%23FFFFFF"
+		RETURN
+		    "data:image/svg+xml;charset=utf-8,"
+		        & "<svg width='100%25' height='100%25' viewBox='0 0 236 110' overflow='visible' display='block' xmlns='http://www.w3.org/2000/svg'>"
+		        & "<rect x='0' y='0' width='236' height='110' rx='10' fill='" & _Bg & "'/>"
+		        & "<rect x='0' y='8' width='5' height='94' fill='" & _Accent & "'/>"
+		        & "<text x='20' y='32' font-family='Segoe UI' font-size='11' letter-spacing='1.2' fill='" & _Muted & "'>" & _Title & "</text>"
+		        & "<text x='20' y='70' font-family='Segoe UI Semibold' font-size='27' fill='" & _White & "'>" & _Value & "</text>"
+		        & "<text x='20' y='92' font-family='Segoe UI' font-size='10' fill='" & _Muted & "'>" & _Sub & "</text>"
+		        & "</svg>"
+		```
+		dataCategory: ImageUrl
+		formatString: General
+
+	/// SVG KPI card: Price Records
+	measure P1_Records_KPI = ```
+		VAR _Title = "PRICE RECORDS"
+		VAR _Value = SUBSTITUTE(FORMAT([Mandi Records], "#,0"), "%", "%25")
+		VAR _Sub = "Market price observations"
+		VAR _Bg = "%231B2A38"
+		VAR _Accent = "%23FDBF11"
+		VAR _Muted = "%23A9B6C2"
+		VAR _White = "%23FFFFFF"
+		RETURN
+		    "data:image/svg+xml;charset=utf-8,"
+		        & "<svg width='100%25' height='100%25' viewBox='0 0 236 110' overflow='visible' display='block' xmlns='http://www.w3.org/2000/svg'>"
+		        & "<rect x='0' y='0' width='236' height='110' rx='10' fill='" & _Bg & "'/>"
+		        & "<rect x='0' y='8' width='5' height='94' fill='" & _Accent & "'/>"
+		        & "<text x='20' y='32' font-family='Segoe UI' font-size='11' letter-spacing='1.2' fill='" & _Muted & "'>" & _Title & "</text>"
+		        & "<text x='20' y='70' font-family='Segoe UI Semibold' font-size='27' fill='" & _White & "'>" & _Value & "</text>"
+		        & "<text x='20' y='92' font-family='Segoe UI' font-size='10' fill='" & _Muted & "'>" & _Sub & "</text>"
+		        & "</svg>"
+		```
+		dataCategory: ImageUrl
+		formatString: General
+
+	/// SVG KPI card: Avg Market Price
+	measure P1_AvgPrice_KPI = ```
+		VAR _Title = "AVG MARKET PRICE"
+		VAR _Value = SUBSTITUTE(FORMAT([Avg Market Price], "₹ #,0"), "%", "%25")
+		VAR _Sub = "Average across all markets"
+		VAR _Bg = "%231B2A38"
+		VAR _Accent = "%23FDBF11"
+		VAR _Muted = "%23A9B6C2"
+		VAR _White = "%23FFFFFF"
+		RETURN
+		    "data:image/svg+xml;charset=utf-8,"
+		        & "<svg width='100%25' height='100%25' viewBox='0 0 236 110' overflow='visible' display='block' xmlns='http://www.w3.org/2000/svg'>"
+		        & "<rect x='0' y='0' width='236' height='110' rx='10' fill='" & _Bg & "'/>"
+		        & "<rect x='0' y='8' width='5' height='94' fill='" & _Accent & "'/>"
+		        & "<text x='20' y='32' font-family='Segoe UI' font-size='11' letter-spacing='1.2' fill='" & _Muted & "'>" & _Title & "</text>"
+		        & "<text x='20' y='70' font-family='Segoe UI Semibold' font-size='27' fill='" & _White & "'>" & _Value & "</text>"
+		        & "<text x='20' y='92' font-family='Segoe UI' font-size='10' fill='" & _Muted & "'>" & _Sub & "</text>"
+		        & "</svg>"
+		```
+		dataCategory: ImageUrl
+		formatString: General
+
+	/// SVG KPI card: Commodities Tracked
+	measure P2_Tracked_KPI = ```
+		VAR _Title = "COMMODITIES TRACKED"
+		VAR _Value = SUBSTITUTE(FORMAT([Commodities Tracked], "#,0"), "%", "%25")
+		VAR _Sub = "Compared against MSP"
+		VAR _Bg = "%231B2A38"
+		VAR _Accent = "%23FDBF11"
+		VAR _Muted = "%23A9B6C2"
+		VAR _White = "%23FFFFFF"
+		RETURN
+		    "data:image/svg+xml;charset=utf-8,"
+		        & "<svg width='100%25' height='100%25' viewBox='0 0 236 110' overflow='visible' display='block' xmlns='http://www.w3.org/2000/svg'>"
+		        & "<rect x='0' y='0' width='236' height='110' rx='10' fill='" & _Bg & "'/>"
+		        & "<rect x='0' y='8' width='5' height='94' fill='" & _Accent & "'/>"
+		        & "<text x='20' y='32' font-family='Segoe UI' font-size='11' letter-spacing='1.2' fill='" & _Muted & "'>" & _Title & "</text>"
+		        & "<text x='20' y='70' font-family='Segoe UI Semibold' font-size='27' fill='" & _White & "'>" & _Value & "</text>"
+		        & "<text x='20' y='92' font-family='Segoe UI' font-size='10' fill='" & _Muted & "'>" & _Sub & "</text>"
+		        & "</svg>"
+		```
+		dataCategory: ImageUrl
+		formatString: General
+
+	/// SVG KPI card: Average Msp
+	measure P2_AvgMSP_KPI = ```
+		VAR _Title = "AVERAGE MSP"
+		VAR _Value = SUBSTITUTE(FORMAT([Avg MSP], "₹ #,0"), "%", "%25")
+		VAR _Sub = "Across tracked commodities"
+		VAR _Bg = "%231B2A38"
+		VAR _Accent = "%23FDBF11"
+		VAR _Muted = "%23A9B6C2"
+		VAR _White = "%23FFFFFF"
+		RETURN
+		    "data:image/svg+xml;charset=utf-8,"
+		        & "<svg width='100%25' height='100%25' viewBox='0 0 236 110' overflow='visible' display='block' xmlns='http://www.w3.org/2000/svg'>"
+		        & "<rect x='0' y='0' width='236' height='110' rx='10' fill='" & _Bg & "'/>"
+		        & "<rect x='0' y='8' width='5' height='94' fill='" & _Accent & "'/>"
+		        & "<text x='20' y='32' font-family='Segoe UI' font-size='11' letter-spacing='1.2' fill='" & _Muted & "'>" & _Title & "</text>"
+		        & "<text x='20' y='70' font-family='Segoe UI Semibold' font-size='27' fill='" & _White & "'>" & _Value & "</text>"
+		        & "<text x='20' y='92' font-family='Segoe UI' font-size='10' fill='" & _Muted & "'>" & _Sub & "</text>"
+		        & "</svg>"
+		```
+		dataCategory: ImageUrl
+		formatString: General
+
+	/// SVG KPI card: Above Msp
+	measure P2_AboveMSP_KPI = ```
+		VAR _Title = "ABOVE MSP"
+		VAR _Value = SUBSTITUTE(FORMAT([% Above MSP], "+0.0%;-0.0%"), "%", "%25")
+		VAR _Sub = "Share of markets above MSP"
+		VAR _Bg = "%231B2A38"
+		VAR _Accent = "%23FDBF11"
+		VAR _Muted = "%23A9B6C2"
+		VAR _White = "%23FFFFFF"
+		RETURN
+		    "data:image/svg+xml;charset=utf-8,"
+		        & "<svg width='100%25' height='100%25' viewBox='0 0 236 110' overflow='visible' display='block' xmlns='http://www.w3.org/2000/svg'>"
+		        & "<rect x='0' y='0' width='236' height='110' rx='10' fill='" & _Bg & "'/>"
+		        & "<rect x='0' y='8' width='5' height='94' fill='" & _Accent & "'/>"
+		        & "<text x='20' y='32' font-family='Segoe UI' font-size='11' letter-spacing='1.2' fill='" & _Muted & "'>" & _Title & "</text>"
+		        & "<text x='20' y='70' font-family='Segoe UI Semibold' font-size='27' fill='" & _White & "'>" & _Value & "</text>"
+		        & "<text x='20' y='92' font-family='Segoe UI' font-size='10' fill='" & _Muted & "'>" & _Sub & "</text>"
+		        & "</svg>"
+		```
+		dataCategory: ImageUrl
+		formatString: General
+
+	/// SVG KPI card: Median Deviation
+	measure P2_DevPct_KPI = ```
+		VAR _Title = "MEDIAN DEVIATION"
+		VAR _Value = SUBSTITUTE(FORMAT([Median Deviation %], "+0.0%;-0.0%"), "%", "%25")
+		VAR _Sub = "Vs MSP, MSP-traded rows"
+		VAR _Bg = "%231B2A38"
+		VAR _Accent = "%23FDBF11"
+		VAR _Muted = "%23A9B6C2"
+		VAR _White = "%23FFFFFF"
+		RETURN
+		    "data:image/svg+xml;charset=utf-8,"
+		        & "<svg width='100%25' height='100%25' viewBox='0 0 236 110' overflow='visible' display='block' xmlns='http://www.w3.org/2000/svg'>"
+		        & "<rect x='0' y='0' width='236' height='110' rx='10' fill='" & _Bg & "'/>"
+		        & "<rect x='0' y='8' width='5' height='94' fill='" & _Accent & "'/>"
+		        & "<text x='20' y='32' font-family='Segoe UI' font-size='11' letter-spacing='1.2' fill='" & _Muted & "'>" & _Title & "</text>"
+		        & "<text x='20' y='70' font-family='Segoe UI Semibold' font-size='27' fill='" & _White & "'>" & _Value & "</text>"
+		        & "<text x='20' y='92' font-family='Segoe UI' font-size='10' fill='" & _Muted & "'>" & _Sub & "</text>"
+		        & "</svg>"
+		```
+		dataCategory: ImageUrl
+		formatString: General
+
+	/// SVG KPI card: Median Gap Vs Msp
+	measure P2_DevRs_KPI = ```
+		VAR _Title = "MEDIAN GAP VS MSP"
+		VAR _Value = SUBSTITUTE(FORMAT([Median Deviation from MSP], "₹ #,0"), "%", "%25")
+		VAR _Sub = "Median rupee gap to MSP"
+		VAR _Bg = "%231B2A38"
+		VAR _Accent = "%23FDBF11"
+		VAR _Muted = "%23A9B6C2"
+		VAR _White = "%23FFFFFF"
+		RETURN
+		    "data:image/svg+xml;charset=utf-8,"
+		        & "<svg width='100%25' height='100%25' viewBox='0 0 236 110' overflow='visible' display='block' xmlns='http://www.w3.org/2000/svg'>"
+		        & "<rect x='0' y='0' width='236' height='110' rx='10' fill='" & _Bg & "'/>"
+		        & "<rect x='0' y='8' width='5' height='94' fill='" & _Accent & "'/>"
+		        & "<text x='20' y='32' font-family='Segoe UI' font-size='11' letter-spacing='1.2' fill='" & _Muted & "'>" & _Title & "</text>"
+		        & "<text x='20' y='70' font-family='Segoe UI Semibold' font-size='27' fill='" & _White & "'>" & _Value & "</text>"
+		        & "<text x='20' y='92' font-family='Segoe UI' font-size='10' fill='" & _Muted & "'>" & _Sub & "</text>"
+		        & "</svg>"
+		```
+		dataCategory: ImageUrl
+		formatString: General
+
+	column Dummy
+		dataType: string
+		isHidden
+		summarizeBy: none
+		sourceColumn: [Dummy]
+
+	partition '_SVG Measures' = calculated
+		mode: import
+		source = ROW("Dummy", BLANK())

@@ -1,0 +1,72 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "e058e56e7f627b62376a745ebc06a472",
+  "position": {
+    "x": 16,
+    "y": 142,
+    "z": 0,
+    "width": 220,
+    "height": 110,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim Commodity"
+                    }
+                  },
+                  "Property": "Commodity Group"
+                }
+              },
+              "queryRef": "Dim Commodity.Commodity Group",
+              "nativeQueryRef": "Commodity Group"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "data": [
+        {
+          "properties": {
+            "mode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Dropdown'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "header": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Commodity Group'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

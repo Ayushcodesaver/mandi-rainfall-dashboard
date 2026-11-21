@@ -1,0 +1,98 @@
+table 'Monthly Rainfall'
+
+	/// Total monthly rainfall across districts (mm)
+	measure 'Monthly Rainfall Total' = SUM('Monthly Rainfall'[Total Rainfall])
+		formatString: #,0.0
+
+	/// Total normal monthly rainfall across districts (mm)
+	measure 'Monthly Normal Total' = SUM('Monthly Rainfall'[Normal Total])
+		formatString: #,0.0
+
+	/// Monthly rainfall departure from normal
+	measure 'Monthly Departure %' = DIVIDE([Monthly Rainfall Total] - [Monthly Normal Total], [Monthly Normal Total])
+		formatString: +0.0%;-0.0%;0.0%
+
+	column State
+		dataType: string
+		isHidden
+		summarizeBy: none
+		sourceColumn: State
+
+	column District
+		dataType: string
+		isHidden
+		summarizeBy: none
+		sourceColumn: District
+
+	column Year
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: Year
+
+	column Month
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: Month
+
+	column 'Month Start'
+		dataType: dateTime
+		formatString: dd MMM yyyy
+		isHidden
+		summarizeBy: none
+		sourceColumn: 'Month Start'
+
+	column 'Month Name'
+		dataType: string
+		sortByColumn: 'Month Start'
+		summarizeBy: none
+		sourceColumn: 'Month Name'
+
+	column Records
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: Records
+
+	column 'Total Rainfall'
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: 'Total Rainfall'
+
+	column 'Avg Daily Rainfall'
+		dataType: double
+		summarizeBy: none
+		sourceColumn: 'Avg Daily Rainfall'
+
+	column 'Avg Normal Daily Rainfall'
+		dataType: double
+		isHidden
+		summarizeBy: none
+		sourceColumn: 'Avg Normal Daily Rainfall'
+
+	column 'Normal Total'
+		dataType: double
+		isHidden
+		summarizeBy: sum
+		sourceColumn: 'Normal Total'
+
+	column 'District Key'
+		dataType: string
+		isHidden
+		summarizeBy: none
+		sourceColumn: 'District Key'
+
+	partition 'Monthly Rainfall' = m
+		mode: import
+		source =
+			let
+			    Source = Csv.Document(File.Contents("C:/Users/sharm/Downloads/powerbi/District Monthly Rainfall.csv"), [Delimiter=",", Columns=8, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+			    PromotedHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+			    RemovedBlank = Table.SelectRows(PromotedHeaders, each [state] <> null and [state] <> ""),
+			    ChangedType = Table.TransformColumnTypes(RemovedBlank, {{"state", type text}, {"district", type text}, {"year", Int64.Type}, {"month", Int64.Type}, {"total_records", Int64.Type}, {"total_rainfall", type number}, {"average_rainfall", type number}, {"average_normal_rainfall", type number}}),
+			    AddedMonthStart = Table.AddColumn(ChangedType, "Month Start", each #date([year], [month], 1), type date),
+			    AddedMonthName = Table.AddColumn(AddedMonthStart, "Month Name", each Date.MonthName([Month Start], "en-US"), type text),
+			    AddedNormalTotal = Table.AddColumn(AddedMonthName, "Normal Total", each [average_normal_rainfall] * [total_records], type number),
+			    AddedKey = Table.AddColumn(AddedNormalTotal, "District Key", each Text.Combine({Text.Lower([state]), "|", Text.Lower([district])}), type text),
+			    RenamedColumns = Table.RenameColumns(AddedKey, {{"state", "State"}, {"district", "District"}, {"year", "Year"}, {"month", "Month"}, {"total_records", "Records"}, {"total_rainfall", "Total Rainfall"}, {"average_rainfall", "Avg Daily Rainfall"}, {"average_normal_rainfall", "Avg Normal Daily Rainfall"}})
+			in
+			    RenamedColumns

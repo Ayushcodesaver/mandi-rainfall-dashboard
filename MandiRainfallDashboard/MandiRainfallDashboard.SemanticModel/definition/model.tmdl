@@ -1,0 +1,15 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+
+ref table 'Market Prices'
+ref table 'Latest Prices'
+ref table 'MSP Analysis'
+ref table 'Dim Commodity'
+ref table 'Dim District'
+ref table 'Daily Rainfall'
+ref table 'Monthly Rainfall'
+ref table '_SVG Measures'
+
+annotation __PBI_TimeIntelligenceEnabled = 1
