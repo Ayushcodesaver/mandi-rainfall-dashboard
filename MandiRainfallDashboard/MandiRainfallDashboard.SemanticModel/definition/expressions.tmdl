@@ -1,0 +1,1 @@
+expression SourceFolder = "C:/Users/sharm/Downloads/powerbi" meta [IsParameterQuery = true, Type = "Text", IsParameterQueryRequired = true]

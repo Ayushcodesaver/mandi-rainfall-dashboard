@@ -85,7 +85,7 @@ table 'Monthly Rainfall'
 		mode: import
 		source =
 			let
-			    Source = Csv.Document(File.Contents("C:/Users/sharm/Downloads/powerbi/District Monthly Rainfall.csv"), [Delimiter=",", Columns=8, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+			    Source = Csv.Document(File.Contents(SourceFolder & "/" & "District Monthly Rainfall.csv"), [Delimiter=",", Columns=8, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
 			    PromotedHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
 			    RemovedBlank = Table.SelectRows(PromotedHeaders, each [state] <> null and [state] <> ""),
 			    ChangedType = Table.TransformColumnTypes(RemovedBlank, {{"state", type text}, {"district", type text}, {"year", Int64.Type}, {"month", Int64.Type}, {"total_records", Int64.Type}, {"total_rainfall", type number}, {"average_rainfall", type number}, {"average_normal_rainfall", type number}}),

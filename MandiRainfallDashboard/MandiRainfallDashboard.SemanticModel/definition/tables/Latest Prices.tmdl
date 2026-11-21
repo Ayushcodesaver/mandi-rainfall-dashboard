@@ -165,7 +165,7 @@ table 'Latest Prices'
 		mode: import
 		source =
 			let
-			    Source = Csv.Document(File.Contents("C:/Users/sharm/Downloads/powerbi/Latest Market Prices.csv"), [Delimiter=",", Columns=21, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+			    Source = Csv.Document(File.Contents(SourceFolder & "/" & "Latest Market Prices.csv"), [Delimiter=",", Columns=21, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
 			    PromotedHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
 			    RemovedBlank = Table.SelectRows(PromotedHeaders, each [state_name] <> null and [state_name] <> ""),
 			    ReplacedNulls = Table.ReplaceValue(RemovedBlank, "null", null, Replacer.ReplaceValue, {"one_yr_ago", "two_yr_ago", "three_yr_ago", "one_week_ago", "one_month_ago", "msp_price", "deviation_percent", "deviation_from_msp", "commodity_missing"}),

@@ -85,7 +85,7 @@ table 'Daily Rainfall'
 		mode: import
 		source =
 			let
-			    Source = Csv.Document(File.Contents("C:/Users/sharm/Downloads/powerbi/Daily Rainfall Trend.csv"), [Delimiter=",", Columns=7, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+			    Source = Csv.Document(File.Contents(SourceFolder & "/" & "Daily Rainfall Trend.csv"), [Delimiter=",", Columns=7, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
 			    PromotedHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
 			    RemovedBlank = Table.SelectRows(PromotedHeaders, each [state] <> null and [state] <> ""),
 			    ReplacedNulls = Table.ReplaceValue(RemovedBlank, "null", null, Replacer.ReplaceValue, {"daily_departure_per"}),

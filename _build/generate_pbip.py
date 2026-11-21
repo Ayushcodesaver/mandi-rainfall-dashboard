@@ -47,7 +47,8 @@ def hexid() -> str:
 # summarize: none|sum
 
 def csv_path(fn: str) -> str:
-    return f"C:/Users/sharm/Downloads/powerbi/{fn}"
+    """Quoted filename; combined with the shared SourceFolder parameter inside the M template."""
+    return fn
 
 
 def m_replace_null(cols):
@@ -58,7 +59,7 @@ def m_replace_null(cols):
 
 
 M_LATEST = """let
-    Source = Csv.Document(File.Contents("__CSV__"), [Delimiter=",", Columns=21, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+    Source = Csv.Document(File.Contents(SourceFolder & "/" & "__CSV__"), [Delimiter=",", Columns=21, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
     PromotedHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
     RemovedBlank = Table.SelectRows(PromotedHeaders, each [state_name] <> null and [state_name] <> ""),
     ReplacedNulls = Table.ReplaceValue(RemovedBlank, "null", null, Replacer.ReplaceValue, {"one_yr_ago", "two_yr_ago", "three_yr_ago", "one_week_ago", "one_month_ago", "msp_price", "deviation_percent", "deviation_from_msp", "commodity_missing"}),
@@ -70,7 +71,7 @@ in
     AddedKey""".replace("__CSV__", csv_path("Latest Market Prices.csv"))
 
 M_MARKET = """let
-    Source = Csv.Document(File.Contents("__CSV__"), [Delimiter=",", Columns=8, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+    Source = Csv.Document(File.Contents(SourceFolder & "/" & "__CSV__"), [Delimiter=",", Columns=8, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
     PromotedHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
     RemovedBlank = Table.SelectRows(PromotedHeaders, each [state_name] <> null and [state_name] <> ""),
     ReplacedNulls = Table.ReplaceValue(RemovedBlank, "null", "Unknown", Replacer.ReplaceValue, {"cmdt_name"}),
@@ -81,7 +82,7 @@ in
     AddedKey""".replace("__CSV__", csv_path("New_Query_2026_11_21_18_14_03.csv"))
 
 M_MSP = """let
-    Source = Csv.Document(File.Contents("__CSV__"), [Delimiter=",", Columns=5, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+    Source = Csv.Document(File.Contents(SourceFolder & "/" & "__CSV__"), [Delimiter=",", Columns=5, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
     PromotedHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
     RemovedBlank = Table.SelectRows(PromotedHeaders, each [cmdt_name] <> null and [cmdt_name] <> ""),
     ReplacedNulls = Table.ReplaceValue(RemovedBlank, "null", null, Replacer.ReplaceValue, {"average_msp", "price_difference"}),
@@ -92,7 +93,7 @@ in
     RenamedColumns""".replace("__CSV__", csv_path("Commodity MSP Analysis.csv"))
 
 M_DIM_COMMODITY = """let
-    Source = Csv.Document(File.Contents("__CSV__"), [Delimiter=",", Columns=21, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+    Source = Csv.Document(File.Contents(SourceFolder & "/" & "__CSV__"), [Delimiter=",", Columns=21, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
     PromotedHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
     RemovedBlank = Table.SelectRows(PromotedHeaders, each [cmdt_name] <> null and [cmdt_name] <> ""),
     ReplacedNulls = Table.ReplaceValue(RemovedBlank, "null", "Unknown", Replacer.ReplaceValue, {"cmdt_name"}),
@@ -104,7 +105,7 @@ in
     RenamedColumns""".replace("__CSV__", csv_path("Latest Market Prices.csv"))
 
 M_DIM_DISTRICT = """let
-    Source = Csv.Document(File.Contents("__CSV__"), [Delimiter=",", Columns=8, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+    Source = Csv.Document(File.Contents(SourceFolder & "/" & "__CSV__"), [Delimiter=",", Columns=8, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
     PromotedHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
     RemovedBlank = Table.SelectRows(PromotedHeaders, each [state] <> null and [state] <> ""),
     SelectedColumns = Table.SelectColumns(RemovedBlank, {"state", "district"}),
@@ -116,7 +117,7 @@ in
     RenamedColumns""".replace("__CSV__", csv_path("District Monthly Rainfall.csv"))
 
 M_DAILY = """let
-    Source = Csv.Document(File.Contents("__CSV__"), [Delimiter=",", Columns=7, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+    Source = Csv.Document(File.Contents(SourceFolder & "/" & "__CSV__"), [Delimiter=",", Columns=7, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
     PromotedHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
     RemovedBlank = Table.SelectRows(PromotedHeaders, each [state] <> null and [state] <> ""),
     ReplacedNulls = Table.ReplaceValue(RemovedBlank, "null", null, Replacer.ReplaceValue, {"daily_departure_per"}),
@@ -129,7 +130,7 @@ in
     RenamedColumns""".replace("__CSV__", csv_path("Daily Rainfall Trend.csv"))
 
 M_MONTHLY = """let
-    Source = Csv.Document(File.Contents("__CSV__"), [Delimiter=",", Columns=8, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+    Source = Csv.Document(File.Contents(SourceFolder & "/" & "__CSV__"), [Delimiter=",", Columns=8, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
     PromotedHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
     RemovedBlank = Table.SelectRows(PromotedHeaders, each [state] <> null and [state] <> ""),
     ChangedType = Table.TransformColumnTypes(RemovedBlank, {{"state", type text}, {"district", type text}, {"year", Int64.Type}, {"month", Int64.Type}, {"total_records", Int64.Type}, {"total_rainfall", type number}, {"average_rainfall", type number}, {"average_normal_rainfall", type number}}),
@@ -434,6 +435,10 @@ def build_model() -> None:
     write_utf8(os.path.join(SM, "definition", "model.tmdl"), "\n".join(lines))
     # relationships
     write_utf8(os.path.join(SM, "definition", "relationships.tmdl"), tmdl_relationships())
+    # shared SourceFolder parameter - the ONE value a downloader must repoint to their CSV folder
+    write_utf8(os.path.join(SM, "definition", "expressions.tmdl"),
+               'expression SourceFolder = "C:/Users/sharm/Downloads/powerbi" '
+               'meta [IsParameterQuery = true, Type = "Text", IsParameterQueryRequired = true]\n')
     # tables
     for t in TABLES:
         write_utf8(os.path.join(tables_dir, f"{t['name']}.tmdl"), tmdl_table(t))

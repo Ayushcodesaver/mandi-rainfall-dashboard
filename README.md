@@ -18,9 +18,11 @@ prices and IMD district rainfall data.
 ## Quick start
 
 1. Install [Power BI Desktop](https://powerbi.microsoft.com/desktop) (free).
-2. Open `MandiRainfallDashboard.pbip`.
-3. Click **Refresh** to load the CSV data (queries reference the CSVs by path —
-   keep the folder layout, or update the paths in **Transform data**).
+2. Clone or download this repo (keep the CSVs next to the project folder).
+3. Open `MandiRainfallDashboard.pbip`.
+4. All queries read the CSVs through one shared parameter. If your CSVs live
+   somewhere else, set it once: **Transform data → Edit parameters → `SourceFolder`**
+   → point it at the folder containing the 5 CSVs → **Refresh**.
 
 ## Pages
 

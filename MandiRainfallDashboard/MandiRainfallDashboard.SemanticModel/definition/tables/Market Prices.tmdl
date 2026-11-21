@@ -78,7 +78,7 @@ table 'Market Prices'
 		mode: import
 		source =
 			let
-			    Source = Csv.Document(File.Contents("C:/Users/sharm/Downloads/powerbi/New_Query_2026_11_21_18_14_03.csv"), [Delimiter=",", Columns=8, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+			    Source = Csv.Document(File.Contents(SourceFolder & "/" & "New_Query_2026_11_21_18_14_03.csv"), [Delimiter=",", Columns=8, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
 			    PromotedHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
 			    RemovedBlank = Table.SelectRows(PromotedHeaders, each [state_name] <> null and [state_name] <> ""),
 			    ReplacedNulls = Table.ReplaceValue(RemovedBlank, "null", "Unknown", Replacer.ReplaceValue, {"cmdt_name"}),
