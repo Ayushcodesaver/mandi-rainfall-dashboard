@@ -15,14 +15,23 @@ prices and IMD district rainfall data.
 └── _build/                                 generator + validation scripts (Python)
 ```
 
-## Quick start
+## Quick start — read this before opening on a new machine
+
+The CSV paths are **not** hardcoded, but the `SourceFolder` parameter ships with the
+author's folder as its default — so on any other machine you will see a
+**"Load: Could not find a part of the path C:\Users\..."** error on first open.
+That is expected and takes 30 seconds to fix:
 
 1. Install [Power BI Desktop](https://powerbi.microsoft.com/desktop) (free).
-2. Clone or download this repo (keep the CSVs next to the project folder).
-3. Open `MandiRainfallDashboard.pbip`.
-4. All queries read the CSVs through one shared parameter. If your CSVs live
-   somewhere else, set it once: **Transform data → Edit parameters → `SourceFolder`**
-   → point it at the folder containing the 5 CSVs → **Refresh**.
+2. Clone or download this repo **whole** (the 5 CSVs must stay next to the
+   `MandiRainfallDashboard` project folder).
+3. Close the **Load** error dialog with **Close**.
+4. Go to **Transform data → Edit parameters → `SourceFolder`** and set it to the
+   folder that contains the 5 CSV files (e.g. `D:\Downloads\mandi-rainfall-dashboard`).
+5. Click **OK → Close & Apply**, then **Refresh**. Done — the dashboard fills up.
+
+> The repo layout (`5 CSVs` next to `MandiRainfallDashboard/`) is exactly what the
+> queries expect — cloning the repo is all the setup needed.
 
 ## Pages
 
