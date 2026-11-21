@@ -628,24 +628,18 @@ TABLE_HEADERS = {"columnHeaders": [{
 }]}
 
 
-def card(entity, measure, x, y, w=216, h=58):
-    """Native KPI card with white value on the navy canvas frame; label hidden (canvas paints title)."""
+def card(entity, measure, x, y, w=236, h=112):
+    """KPI card = the whole frame: cardVisual paints its own white surface, label and value."""
     qs = {"Data": {"projections": [projection(meas_field(entity, measure), entity, measure)]}}
     return make_visual("cardVisual", x, y, w, h, qs,
                        objects={
                            "value": [{"properties": {
                                "fontColor": {"solid": {"color": {"expr": {"Literal": {"Value": "'#17202B'"}}}}},
-                               "fontSize": {"expr": {"Literal": {"Value": "28D"}}},
+                               "fontSize": {"expr": {"Literal": {"Value": "26D"}}},
                                "labelDisplayUnits": {"expr": {"Literal": {"Value": "1D"}}},
                                "labelPrecision": {"expr": {"Literal": {"Value": "0L"}}},
                            }, "selector": {"id": "default"}}],
-                           "label": [{"properties": {"show": {"expr": {"Literal": {"Value": "false"}}}},
-                                      "selector": {"id": "default"}}],
-                       },
-                       vco={"background": [{"properties": {"show": literal("false")}}],
-                            "border": [{"properties": {"show": literal("false")}}],
-                            "dropShadow": [{"properties": {"show": literal("false")}}],
-                            "title": [{"properties": {"show": literal("false")}}]})
+                       })
 
 
 def column_chart(title, entity, cat_col, y_props, x, y, w, h, sort=None, labels=True, y_entity=None):
@@ -757,16 +751,15 @@ def build_pages():
     # ---------------- Page 1: Overview ----------------
     p1 = new_page("Overview", "overview_bg.svg", canvas_svg(
         "MANDI MARKET INTELLIGENCE", "Prices - markets and commodity coverage across India",
-        [(16, 88, "STATES COVERED"), (262, 88, "MANDI MARKETS"), (508, 88, "COMMODITIES"),
-         (754, 88, "PRICE RECORDS"), (1000, 88, "AVG MARKET PRICE")],
+        [],
         [(16, 214, 624, 240, "AVG MARKET PRICE BY COMMODITY"), (656, 214, 608, 240, "SHARE OF RECORDS BY GROUP"),
          (16, 466, 624, 238, "AVG MARKET PRICE BY STATE"), (656, 466, 608, 238, "COMMODITY PRICE SUMMARY")]))
     v = [
-        card(MP, "States Count", 24, 124),
-        card(MP, "Markets Count", 270, 124),
-        card(MP, "Commodities Count", 516, 124),
-        card(MP, "Mandi Records", 762, 124),
-        card(MP, "Avg Market Price", 1008, 124),
+        card(MP, "States Count", 16, 88),
+        card(MP, "Markets Count", 262, 88),
+        card(MP, "Commodities Count", 508, 88),
+        card(MP, "Mandi Records", 754, 88),
+        card(MP, "Avg Market Price", 1000, 88),
         column_chart(None, MP, "Commodity", [("measure", "Avg Market Price")],
                      24, 246, 608, 200, sort=sort_by(MP, "measure", "Avg Market Price")),
         donut(None, DC, "Commodity Group", [("measure", "Mandi Records")],
@@ -786,16 +779,15 @@ def build_pages():
     # ---------------- Page 2: Prices vs MSP ----------------
     p2 = new_page("Prices vs MSP", "mspbp_bg.svg", canvas_svg(
         "PRICE VS MSP ANALYSIS", "Where markets trade against government support prices",
-        [(16, 88, "COMMODITIES TRACKED"), (262, 88, "AVERAGE MSP"), (508, 88, "ABOVE MSP"),
-         (754, 88, "MEDIAN DEVIATION"), (1000, 88, "MEDIAN GAP VS MSP")],
+        [],
         [(16, 214, 812, 240, "MARKET PRICE VS MSP BY COMMODITY"), (844, 214, 420, 240, "WEEK-ON-WEEK TREND"),
          (16, 466, 624, 238, "PRICE GAP VS MSP BY COMMODITY"), (656, 466, 608, 238, "MSP COMPARISON DETAIL")]))
     v = [
-        card(MS, "Commodities Tracked", 24, 124),
-        card(MS, "Avg MSP", 270, 124),
-        card(LP, "% Above MSP", 516, 124),
-        card(LP, "Median Deviation %", 762, 124),
-        card(LP, "Median Deviation from MSP", 1008, 124),
+        card(MS, "Commodities Tracked", 16, 88),
+        card(MS, "Avg MSP", 262, 88),
+        card(LP, "% Above MSP", 508, 88),
+        card(LP, "Median Deviation %", 754, 88),
+        card(LP, "Median Deviation from MSP", 1000, 88),
         column_chart(None, MS, "Commodity",
                      [("measure", "Avg Commodity Market Price"), ("measure", "Avg MSP")],
                      24, 246, 796, 200),
@@ -849,16 +841,15 @@ def build_pages():
     # ---------------- Page 4: Rainfall ----------------
     p4 = new_page("Rainfall", "rainfall_bg.svg", canvas_svg(
         "RAINFALL MONITOR", "District-level rainfall against long-term normals",
-        [(16, 88, "ACTUAL RAINFALL"), (262, 88, "NORMAL RAINFALL"), (508, 88, "DEPARTURE"),
-         (754, 88, "DISTRICTS MONITORED")],
+        [],
         [(1000, 88, 264, 112, "FILTER BY STATE"),
          (16, 214, 812, 240, "DAILY RAINFALL - ACTUAL VS NORMAL"), (844, 214, 420, 240, "DISTRICT-DAYS BY CATEGORY"),
          (16, 466, 624, 238, "MONTHLY RAINFALL VS NORMAL"), (656, 466, 608, 238, "ACTUAL RAINFALL BY STATE")]))
     v = [
-        card(DR, "Total Actual Rainfall", 24, 124),
-        card(DR, "Total Normal Rainfall", 270, 124),
-        card(DR, "Rainfall Departure %", 516, 124),
-        card(DD, "Districts Monitored", 762, 124),
+        card(DR, "Total Actual Rainfall", 16, 88),
+        card(DR, "Total Normal Rainfall", 262, 88),
+        card(DR, "Rainfall Departure %", 508, 88),
+        card(DD, "Districts Monitored", 754, 88),
         slicer(DD, "State", 1008, 120, 248, 68),
         line_chart(None, DR, "Date",
                    [("measure", "Total Actual Rainfall"), ("measure", "Total Normal Rainfall")],
