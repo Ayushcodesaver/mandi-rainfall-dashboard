@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "f94af3b55b33496827b6d4aaef6e272b",
   "position": {
-    "x": 844,
-    "y": 142,
+    "x": 852,
+    "y": 246,
     "z": 0,
-    "width": 420,
-    "height": 270,
+    "width": 404,
+    "height": 200,
     "tabOrder": 0
   },
   "visual": {
@@ -76,6 +76,13 @@
                   "Value": "0L"
                 }
               }
+            },
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
             }
           }
         }
@@ -88,14 +95,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Market Price Trend (week-on-week)'"
+                  "Value": "false"
                 }
               }
             }

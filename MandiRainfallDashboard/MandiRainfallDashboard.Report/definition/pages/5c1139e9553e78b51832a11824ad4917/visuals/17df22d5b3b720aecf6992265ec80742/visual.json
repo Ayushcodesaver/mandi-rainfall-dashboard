@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "17df22d5b3b720aecf6992265ec80742",
   "position": {
-    "x": 656,
-    "y": 428,
+    "x": 664,
+    "y": 498,
     "z": 0,
-    "width": 608,
-    "height": 276,
+    "width": 592,
+    "height": 198,
     "tabOrder": 0
   },
   "visual": {
@@ -153,14 +153,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Actual Rainfall by State'"
+                  "Value": "false"
                 }
               }
             }

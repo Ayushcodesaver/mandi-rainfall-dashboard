@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "4271ef7f43f0dd4868014e9528622146",
   "position": {
-    "x": 252,
-    "y": 16,
+    "x": 260,
+    "y": 120,
     "z": 0,
-    "width": 504,
-    "height": 250,
+    "width": 488,
+    "height": 256,
     "tabOrder": 0
   },
   "visual": {
@@ -153,14 +153,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Top 10 Markets by Avg Market Price'"
+                  "Value": "false"
                 }
               }
             }

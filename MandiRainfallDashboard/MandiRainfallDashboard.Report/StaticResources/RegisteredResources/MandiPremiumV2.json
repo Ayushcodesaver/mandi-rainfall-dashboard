@@ -1,5 +1,5 @@
 {
-  "name": "MandiPremium.json",
+  "name": "MandiPremiumV2.json",
   "dataColors": [
     "#E3120B",
     "#0098A6",
@@ -51,7 +51,7 @@
           {
             "color": {
               "solid": {
-                "color": "#F6F3EC"
+                "color": "#F2EFE6"
               }
             },
             "transparency": 0
@@ -61,7 +61,7 @@
           {
             "color": {
               "solid": {
-                "color": "#EAE4D5"
+                "color": "#E4DECF"
               }
             }
           }
@@ -77,30 +77,12 @@
                 "color": "#FFFFFF"
               }
             },
-            "transparency": 0
+            "transparency": 100
           }
         ],
-        "border": [
+        "visualHeader": [
           {
-            "show": true,
-            "color": {
-              "solid": {
-                "color": "#E4DFD2"
-              }
-            },
-            "radius": 8
-          }
-        ],
-        "title": [
-          {
-            "fontColor": {
-              "solid": {
-                "color": "#17202B"
-              }
-            },
-            "fontSize": 12,
-            "fontFamily": "Segoe UI Semibold",
-            "alignment": "left"
+            "transparency": 100
           }
         ]
       }

@@ -2,38 +2,92 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "dc29a34bfd441e2af9e5b389ed65a398",
   "position": {
-    "x": 262,
-    "y": 16,
+    "x": 270,
+    "y": 124,
     "z": 0,
-    "width": 236,
-    "height": 110,
+    "width": 216,
+    "height": 58,
     "tabOrder": 0
   },
   "visual": {
-    "visualType": "image",
-    "objects": {
-      "image": [
-        {
-          "properties": {
-            "sourceType": {
-              "expr": {
-                "Literal": {
-                  "Value": "'imageData'"
-                }
-              }
-            },
-            "sourceField": {
-              "expr": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "_SVG Measures"
+                      "Entity": "MSP Analysis"
                     }
                   },
-                  "Property": "P2_AvgMSP_KPI"
+                  "Property": "Avg MSP"
+                }
+              },
+              "queryRef": "MSP Analysis.Avg MSP",
+              "nativeQueryRef": "Avg MSP"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "value": [
+        {
+          "properties": {
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#17202B'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "28D"
+                }
+              }
+            },
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            },
+            "labelPrecision": {
+              "expr": {
+                "Literal": {
+                  "Value": "0L"
                 }
               }
             }
+          },
+          "selector": {
+            "id": "default"
+          }
+        }
+      ],
+      "label": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
           }
         }
       ]

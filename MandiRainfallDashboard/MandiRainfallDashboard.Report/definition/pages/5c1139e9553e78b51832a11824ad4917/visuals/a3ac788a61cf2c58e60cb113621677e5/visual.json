@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "a3ac788a61cf2c58e60cb113621677e5",
   "position": {
-    "x": 16,
-    "y": 142,
+    "x": 24,
+    "y": 246,
     "z": 0,
-    "width": 812,
-    "height": 270,
+    "width": 796,
+    "height": 200,
     "tabOrder": 0
   },
   "visual": {
@@ -115,14 +115,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Daily Rainfall - Actual vs Normal'"
+                  "Value": "false"
                 }
               }
             }

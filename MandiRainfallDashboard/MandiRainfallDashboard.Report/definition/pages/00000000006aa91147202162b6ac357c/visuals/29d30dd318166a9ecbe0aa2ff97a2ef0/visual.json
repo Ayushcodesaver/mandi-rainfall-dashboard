@@ -2,38 +2,92 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "29d30dd318166a9ecbe0aa2ff97a2ef0",
   "position": {
-    "x": 754,
-    "y": 16,
+    "x": 762,
+    "y": 124,
     "z": 0,
-    "width": 236,
-    "height": 110,
+    "width": 216,
+    "height": 58,
     "tabOrder": 0
   },
   "visual": {
-    "visualType": "image",
-    "objects": {
-      "image": [
-        {
-          "properties": {
-            "sourceType": {
-              "expr": {
-                "Literal": {
-                  "Value": "'imageData'"
-                }
-              }
-            },
-            "sourceField": {
-              "expr": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "_SVG Measures"
+                      "Entity": "Market Prices"
                     }
                   },
-                  "Property": "P1_Records_KPI"
+                  "Property": "Mandi Records"
+                }
+              },
+              "queryRef": "Market Prices.Mandi Records",
+              "nativeQueryRef": "Mandi Records"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "value": [
+        {
+          "properties": {
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#17202B'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "28D"
+                }
+              }
+            },
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            },
+            "labelPrecision": {
+              "expr": {
+                "Literal": {
+                  "Value": "0L"
                 }
               }
             }
+          },
+          "selector": {
+            "id": "default"
+          }
+        }
+      ],
+      "label": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
           }
         }
       ]

@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "4d47e124912fcbc6fbd8e9edd81e4d9f",
   "position": {
-    "x": 16,
-    "y": 428,
+    "x": 24,
+    "y": 498,
     "z": 0,
-    "width": 624,
-    "height": 276,
+    "width": 608,
+    "height": 198,
     "tabOrder": 0
   },
   "visual": {
@@ -149,14 +149,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Monthly Rainfall vs Normal'"
+                  "Value": "false"
                 }
               }
             }

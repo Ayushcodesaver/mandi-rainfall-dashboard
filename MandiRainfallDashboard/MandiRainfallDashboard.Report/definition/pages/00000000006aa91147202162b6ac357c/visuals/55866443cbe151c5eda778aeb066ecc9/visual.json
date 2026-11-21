@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "55866443cbe151c5eda778aeb066ecc9",
   "position": {
-    "x": 656,
-    "y": 142,
+    "x": 664,
+    "y": 246,
     "z": 0,
-    "width": 608,
-    "height": 270,
+    "width": 592,
+    "height": 200,
     "tabOrder": 0
   },
   "visual": {
@@ -76,6 +76,13 @@
                   "Value": "0L"
                 }
               }
+            },
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
             }
           }
         }
@@ -88,14 +95,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Mandi Records by Commodity Group'"
+                  "Value": "false"
                 }
               }
             }

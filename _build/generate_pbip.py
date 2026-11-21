@@ -452,132 +452,6 @@ def build_model() -> None:
 
 
 # ---------------------------------------------------------------------------
-# SVG KPI CARDS (premium design: dark navy cards, gold accent, per Dashboard-Design repo patterns)
-# ---------------------------------------------------------------------------
-SVG_W, SVG_H = 236, 110
-
-
-def svg_card_dax(title, value_expr, fmt, sub):
-    """DAX returning a styled KPI card as an SVG data URI (ImageUrl measure)."""
-    L = []
-    L.append('VAR _Title = "%s"' % title)
-    L.append('VAR _Value = SUBSTITUTE(FORMAT(%s, "%s"), "%%", "%%25")' % (value_expr, fmt))
-    L.append('VAR _Sub = "%s"' % sub)
-    L.append('VAR _Bg = "%231B2A38"')
-    L.append('VAR _Accent = "%23FDBF11"')
-    L.append('VAR _Muted = "%23A9B6C2"')
-    L.append('VAR _White = "%23FFFFFF"')
-    L.append('RETURN')
-    L.append('    "data:image/svg+xml;charset=utf-8,"')
-    L.append("        & \"<svg width='100%%25' height='100%%25' viewBox='0 0 %d %d' overflow='visible' display='block' xmlns='http://www.w3.org/2000/svg'>\"" % (SVG_W, SVG_H))
-    L.append("        & \"<rect x='0' y='0' width='%d' height='%d' rx='10' fill='\" & _Bg & \"'/>\"" % (SVG_W, SVG_H))
-    L.append("        & \"<rect x='0' y='8' width='5' height='94' fill='\" & _Accent & \"'/>\"")
-    L.append("        & \"<text x='20' y='32' font-family='Segoe UI' font-size='11' letter-spacing='1.2' fill='\" & _Muted & \"'>\" & _Title & \"</text>\"")
-    L.append("        & \"<text x='20' y='70' font-family='Segoe UI Semibold' font-size='27' fill='\" & _White & \"'>\" & _Value & \"</text>\"")
-    L.append("        & \"<text x='20' y='92' font-family='Segoe UI' font-size='10' fill='\" & _Muted & \"'>\" & _Sub & \"</text>\"")
-    L.append("        & \"</svg>\"")
-    return "\n".join(L)
-
-
-TABLES.append({
-    "name": "_SVG Measures",
-    "csv": None,
-    "m": 'ROW("Dummy", BLANK())',
-    "partition_kind": "calculated",
-    "m_outputs": ["Dummy"],
-    "measures": [],
-    "columns": [("Dummy", "text", "none", True, None, None)],
-})
-
-SVG_DEFS = [
-    # (measure name, home table, card title, value expression, value format, sub caption)
-    ("P1_States_KPI", "_SVG Measures", "STATES COVERED", "[States Count]", "#,0", "States with reporting mandis"),
-    ("P1_Markets_KPI", "_SVG Measures", "MANDI MARKETS", "[Markets Count]", "#,0", "Distinct markets reporting"),
-    ("P1_Commodities_KPI", "_SVG Measures", "COMMODITIES", "[Commodities Count]", "#,0", "Traded commodities tracked"),
-    ("P1_Records_KPI", "_SVG Measures", "PRICE RECORDS", "[Mandi Records]", "#,0", "Market price observations"),
-    ("P1_AvgPrice_KPI", "_SVG Measures", "AVG MARKET PRICE", "[Avg Market Price]", "\u20b9 #,0", "Average across all markets"),
-    ("P2_Tracked_KPI", "_SVG Measures", "COMMODITIES TRACKED", "[Commodities Tracked]", "#,0", "Compared against MSP"),
-    ("P2_AvgMSP_KPI", "_SVG Measures", "AVERAGE MSP", "[Avg MSP]", "\u20b9 #,0", "Across tracked commodities"),
-    ("P2_AboveMSP_KPI", "_SVG Measures", "ABOVE MSP", "[% Above MSP]", "+0.0%;-0.0%", "Share of markets above MSP"),
-    ("P2_DevPct_KPI", "_SVG Measures", "MEDIAN DEVIATION", "[Median Deviation %]", "+0.0%;-0.0%", "Vs MSP, MSP-traded rows"),
-    ("P2_DevRs_KPI", "_SVG Measures", "MEDIAN GAP VS MSP", "[Median Deviation from MSP]", "\u20b9 #,0", "Median rupee gap to MSP"),
-    ("P4_Actual_KPI", "Daily Rainfall", "ACTUAL RAINFALL", "[Total Actual Rainfall]", "#,0.0", "Millimetres recorded"),
-    ("P4_Normal_KPI", "Daily Rainfall", "NORMAL RAINFALL", "[Total Normal Rainfall]", "#,0.0", "Long-term normal (mm)"),
-    ("P4_Departure_KPI", "Daily Rainfall", "DEPARTURE", "[Rainfall Departure %]", "+0.0%;-0.0%", "Actual vs normal"),
-    ("P4_Districts_KPI", "Daily Rainfall", "DISTRICTS MONITORED", "[Districts Monitored]", "#,0", "Districts under watch"),
-]
-
-def svg_banner_dax(title, sub):
-    """Wide page-header banner as SVG data URI."""
-    L = []
-    L.append('VAR _Title = "%s"' % title)
-    L.append('VAR _Sub = "%s"' % sub)
-    L.append('VAR _Bg = "%231B2A38"')
-    L.append('VAR _Accent = "%23FDBF11"')
-    L.append('VAR _White = "%23FFFFFF"')
-    L.append('VAR _Muted = "%23A9B6C2"')
-    L.append('RETURN')
-    L.append('    "data:image/svg+xml;charset=utf-8,"')
-    L.append("        & \"<svg width='100%%25' height='100%%25' viewBox='0 0 1280 64' overflow='visible' display='block' xmlns='http://www.w3.org/2000/svg'>\"")
-    L.append("        & \"<rect x='0' y='0' width='1280' height='64' fill='\" & _Bg & \"'/>\"")
-    L.append("        & \"<rect x='0' y='60' width='240' height='4' fill='\" & _Accent & \"'/>\"")
-    L.append("        & \"<text x='24' y='40' font-family='Segoe UI Semibold' font-size='20' letter-spacing='0.5' fill='\" & _White & \"'>\" & _Title & \"</text>\"")
-    L.append("        & \"<text x='1256' y='40' text-anchor='end' font-family='Segoe UI' font-size='12' fill='\" & _Muted & \"'>\" & _Sub & \"</text>\"")
-    L.append("        & \"</svg>\"")
-    return "\n".join(L)
-
-
-BANNER_DEFS = [
-    ("P1_Header", "MANDI MARKET INTELLIGENCE", "Overview - prices, markets and commodity coverage"),
-    ("P2_Header", "PRICE VS MSP ANALYSIS", "Where markets trade against government support prices"),
-    ("P3_Header", "MARKET EXPLORER", "Every mandi, every commodity - slice and search"),
-    ("P4_Header", "RAINFALL MONITOR", "District-level rainfall against long-term normals"),
-]
-
-for _b in BANNER_DEFS:
-    _dax = svg_banner_dax(_b[1], _b[2])
-    for _t in TABLES:
-        if _t["name"] == "_SVG Measures":
-            _t["measures"].append((_b[0], _dax, "General", "SVG page header: " + _b[1], "ImageUrl"))
-            break
-
-for _m in SVG_DEFS:
-    _mname, _home, _title, _vexpr, _fmt, _sub = _m
-    _dax = svg_card_dax(_title, _vexpr, _fmt, _sub)
-    _desc = "SVG KPI card: " + _title.title()
-    for _t in TABLES:
-        if _t["name"] == _home:
-            _t["measures"].append((_mname, _dax, "General", _desc, "ImageUrl"))
-            break
-
-
-def svg_card_visual(measure_name, home_table, x, y, w=SVG_W, h=SVG_H):
-    """Image visual bound to an ImageUrl measure - renders the SVG KPI card."""
-    v = {
-        "$schema": SCHEMA_VISUAL,
-        "name": hexid(),
-        "position": {"x": x, "y": y, "z": 0, "width": w, "height": h, "tabOrder": 0},
-        "visual": {
-            "visualType": "image",
-            "objects": {
-                "image": [{
-                    "properties": {
-                        "sourceType": literal("'imageData'"),
-                        "sourceField": {"expr": meas_field(home_table, measure_name)},
-                    }
-                }]
-            },
-            "visualContainerObjects": {
-                "background": [{"properties": {"show": literal("false")}}],
-                "border": [{"properties": {"show": literal("false")}}],
-                "dropShadow": [{"properties": {"show": literal("false")}}],
-                "title": [{"properties": {"show": literal("false")}}],
-            },
-        },
-    }
-    return v
-
-
 # ---------------------------------------------------------------------------
 # PBIR GENERATION
 # ---------------------------------------------------------------------------
@@ -601,6 +475,8 @@ def projection(field, entity, prop, active=False):
 
 
 def title_vco(text):
+    if text is None:
+        return {"title": [{"properties": {"show": {"expr": {"Literal": {"Value": "false"}}}}}]}
     return {"title": [{
         "properties": {
             "show": {"expr": {"Literal": {"Value": "true"}}},
@@ -740,6 +616,7 @@ DONUT_LABELS = {"labels": [{
         "show": literal("true"),
         "labelStyle": literal("'Data'"),
         "labelPrecision": literal("0L"),
+        "labelDisplayUnits": literal("1D"),
     }
 }]}
 
@@ -751,8 +628,24 @@ TABLE_HEADERS = {"columnHeaders": [{
 }]}
 
 
-def card(svg_measure, x, y, w=236, h=110):
-    return svg_card_visual(svg_measure, "_SVG Measures", x, y, w, h)
+def card(entity, measure, x, y, w=216, h=58):
+    """Native KPI card with white value on the navy canvas frame; label hidden (canvas paints title)."""
+    qs = {"Data": {"projections": [projection(meas_field(entity, measure), entity, measure)]}}
+    return make_visual("cardVisual", x, y, w, h, qs,
+                       objects={
+                           "value": [{"properties": {
+                               "fontColor": {"solid": {"color": {"expr": {"Literal": {"Value": "'#17202B'"}}}}},
+                               "fontSize": {"expr": {"Literal": {"Value": "28D"}}},
+                               "labelDisplayUnits": {"expr": {"Literal": {"Value": "1D"}}},
+                               "labelPrecision": {"expr": {"Literal": {"Value": "0L"}}},
+                           }, "selector": {"id": "default"}}],
+                           "label": [{"properties": {"show": {"expr": {"Literal": {"Value": "false"}}}},
+                                      "selector": {"id": "default"}}],
+                       },
+                       vco={"background": [{"properties": {"show": literal("false")}}],
+                            "border": [{"properties": {"show": literal("false")}}],
+                            "dropShadow": [{"properties": {"show": literal("false")}}],
+                            "title": [{"properties": {"show": literal("false")}}]})
 
 
 def column_chart(title, entity, cat_col, y_props, x, y, w, h, sort=None, labels=True, y_entity=None):
@@ -798,13 +691,16 @@ def table(title, projections_list, x, y, w, h):
     return make_visual("tableEx", x, y, w, h, qs, objects=dict(TABLE_HEADERS), vco=title_vco(title))
 
 
-def slicer(entity, col, display, x, y, w=220, h=110):
+def slicer(entity, col, x, y, w=204, h=56):
     qs = {"Values": {"projections": [projection(col_field(entity, col), entity, col)]}}
     objects = {
         "data": [{"properties": {"mode": literal("'Dropdown'")}}],
-        "header": [{"properties": {"show": literal("true"), "text": literal(f"'{display}'")}}],
+        "header": [{"properties": {"show": literal("false")}}],
     }
-    return make_visual("slicer", x, y, w, h, qs, objects=objects)
+    return make_visual("slicer", x, y, w, h, qs, objects=objects,
+                       vco={"background": [{"properties": {"show": literal("false")}}],
+                            "border": [{"properties": {"show": literal("false")}}],
+                            "title": [{"properties": {"show": literal("false")}}]})
 
 
 # ---------------------------------------------------------------------------
@@ -819,86 +715,123 @@ DR = "Daily Rainfall"
 MR = "Monthly Rainfall"
 
 
+CANVASES = []  # (svg filename, svg content) collected by build_pages, written by build_report_root
+
+
+def esc(t):
+    return t.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
+
+def canvas_svg(title, subtitle, kpi_frames, section_frames):
+    """Page background: warm paper canvas, navy header band, KPI frames, white section frames."""
+    p = []
+    p.append("<svg width='1280' height='720' viewBox='0 0 1280 720' xmlns='http://www.w3.org/2000/svg'>")
+    p.append("<rect width='1280' height='720' fill='#F2EFE6'/>")
+    p.append("<rect width='1280' height='72' fill='#1B2A38'/>")
+    p.append("<rect x='0' y='68' width='240' height='4' fill='#FDBF11'/>")
+    p.append("<text x='28' y='32' font-family='Segoe UI Semibold' font-size='20' letter-spacing='1' fill='#FFFFFF'>" + esc(title) + "</text>")
+    p.append("<text x='28' y='54' font-family='Segoe UI' font-size='11' fill='#A9B6C2'>" + esc(subtitle) + "</text>")
+    for x, y, t in kpi_frames:
+        p.append("<rect x='%d' y='%d' width='236' height='112' rx='10' fill='#FFFFFF' stroke='#E2DCCC' stroke-width='1'/>" % (x, y))
+        p.append("<rect x='%d' y='%d' width='5' height='112' fill='#FDBF11'/>" % (x, y))
+        p.append("<text x='%d' y='%d' font-family='Segoe UI' font-size='10' letter-spacing='1.2' fill='#5B6B7B'>" % (x + 18, y + 24) + esc(t) + "</text>")
+    for x, y, w, h, t in section_frames:
+        p.append("<rect x='%d' y='%d' width='%d' height='%d' rx='10' fill='#FFFFFF' stroke='#E2DCCC' stroke-width='1'/>" % (x, y, w, h))
+        p.append("<text x='%d' y='%d' font-family='Segoe UI Semibold' font-size='12.5' fill='#17202B'>" % (x + 16, y + 26) + esc(t) + "</text>")
+    p.append("<text x='1256' y='712' text-anchor='end' font-family='Segoe UI' font-size='9' fill='#9AA08F'>DATA: AGMARKNET + IMD | BUILT 21 NOV 2026</text>")
+    p.append("</svg>")
+    return "".join(p)
+
+
 def build_pages():
     pages = []
     page_order = []
     pages_json = {"$schema": SCHEMA_PAGES}
 
-    def new_page(display):
+    def new_page(display, svg_name, svg):
         pid = hexid()
         page_order.append(pid)
-        pages_json["pageOrder"] = page_order
+        CANVASES.append((svg_name, svg))
         return pid
 
     # ---------------- Page 1: Overview ----------------
-    p1 = new_page("Overview")
+    p1 = new_page("Overview", "overview_bg.svg", canvas_svg(
+        "MANDI MARKET INTELLIGENCE", "Prices - markets and commodity coverage across India",
+        [(16, 88, "STATES COVERED"), (262, 88, "MANDI MARKETS"), (508, 88, "COMMODITIES"),
+         (754, 88, "PRICE RECORDS"), (1000, 88, "AVG MARKET PRICE")],
+        [(16, 214, 624, 240, "AVG MARKET PRICE BY COMMODITY"), (656, 214, 608, 240, "SHARE OF RECORDS BY GROUP"),
+         (16, 466, 624, 238, "AVG MARKET PRICE BY STATE"), (656, 466, 608, 238, "COMMODITY PRICE SUMMARY")]))
     v = [
-        card("P1_States_KPI", 16, 16),
-        card("P1_Markets_KPI", 262, 16),
-        card("P1_Commodities_KPI", 508, 16),
-        card("P1_Records_KPI", 754, 16),
-        card("P1_AvgPrice_KPI", 1000, 16),
-        column_chart("Avg Market Price by Commodity", MP, "Commodity",
-                     [("measure", "Avg Market Price")], 16, 142, 624, 270,
-                     sort=sort_by(MP, "measure", "Avg Market Price")),
-        donut("Mandi Records by Commodity Group", DC, "Commodity Group",
-              [("measure", "Mandi Records")], 656, 142, 608, 270, y_entity=MP),
-        bar_chart("Avg Market Price by State", MP, "State",
-                  [("measure", "Avg Market Price")], 16, 428, 624, 276,
-                  sort=sort_by(MP, "measure", "Avg Market Price")),
-        table("Commodity Price Summary", [
+        card(MP, "States Count", 24, 124),
+        card(MP, "Markets Count", 270, 124),
+        card(MP, "Commodities Count", 516, 124),
+        card(MP, "Mandi Records", 762, 124),
+        card(MP, "Avg Market Price", 1008, 124),
+        column_chart(None, MP, "Commodity", [("measure", "Avg Market Price")],
+                     24, 246, 608, 200, sort=sort_by(MP, "measure", "Avg Market Price")),
+        donut(None, DC, "Commodity Group", [("measure", "Mandi Records")],
+              664, 246, 592, 200, y_entity=MP),
+        bar_chart(None, MP, "State", [("measure", "Avg Market Price")],
+                  24, 498, 608, 198, sort=sort_by(MP, "measure", "Avg Market Price")),
+        table(None, [
             (DC, "Commodity", "column"),
             (MP, "Avg Market Price", "measure"),
             (MP, "Min Market Price", "measure"),
             (MP, "Max Market Price", "measure"),
             (LP, "Latest Avg Price", "measure"),
-        ], 656, 428, 608, 276),
+        ], 664, 498, 592, 198),
     ]
     pages.append((p1, "Overview", v))
 
     # ---------------- Page 2: Prices vs MSP ----------------
-    p2 = new_page("Prices vs MSP")
+    p2 = new_page("Prices vs MSP", "mspbp_bg.svg", canvas_svg(
+        "PRICE VS MSP ANALYSIS", "Where markets trade against government support prices",
+        [(16, 88, "COMMODITIES TRACKED"), (262, 88, "AVERAGE MSP"), (508, 88, "ABOVE MSP"),
+         (754, 88, "MEDIAN DEVIATION"), (1000, 88, "MEDIAN GAP VS MSP")],
+        [(16, 214, 812, 240, "MARKET PRICE VS MSP BY COMMODITY"), (844, 214, 420, 240, "WEEK-ON-WEEK TREND"),
+         (16, 466, 624, 238, "PRICE GAP VS MSP BY COMMODITY"), (656, 466, 608, 238, "MSP COMPARISON DETAIL")]))
     v = [
-        card("P2_Tracked_KPI", 16, 16),
-        card("P2_AvgMSP_KPI", 262, 16),
-        card("P2_AboveMSP_KPI", 508, 16),
-        card("P2_DevPct_KPI", 754, 16),
-        card("P2_DevRs_KPI", 1000, 16),
-        column_chart("Market Price vs MSP by Commodity", MS, "Commodity",
+        card(MS, "Commodities Tracked", 24, 124),
+        card(MS, "Avg MSP", 270, 124),
+        card(LP, "% Above MSP", 516, 124),
+        card(LP, "Median Deviation %", 762, 124),
+        card(LP, "Median Deviation from MSP", 1008, 124),
+        column_chart(None, MS, "Commodity",
                      [("measure", "Avg Commodity Market Price"), ("measure", "Avg MSP")],
-                     16, 142, 812, 270),
-        donut("Market Price Trend (week-on-week)", LP, "Trend",
-              [("measure", "Markets Reporting")], 844, 142, 420, 270),
-        bar_chart("Price Gap vs MSP by Commodity", MS, "Commodity",
-                  [("measure", "Avg Price Gap vs MSP")], 16, 428, 624, 276,
-                  sort=sort_by(MS, "measure", "Avg Price Gap vs MSP")),
-        table("MSP Comparison Detail", [
+                     24, 246, 796, 200),
+        donut(None, LP, "Trend", [("measure", "Markets Reporting")], 852, 246, 404, 200),
+        bar_chart(None, MS, "Commodity", [("measure", "Avg Price Gap vs MSP")],
+                  24, 498, 608, 198, sort=sort_by(MS, "measure", "Avg Price Gap vs MSP")),
+        table(None, [
             (DC, "Commodity Group", "column"),
             (MS, "Commodity", "column"),
             (MS, "Avg Market Price", "column"),
             (MS, "Average MSP", "column"),
             (MS, "Price Difference", "column"),
             (MS, "Records", "column"),
-        ], 656, 428, 608, 276),
+        ], 664, 498, 592, 198),
     ]
     pages.append((p2, "Prices vs MSP", v))
 
     # ---------------- Page 3: Market Explorer ----------------
-    p3 = new_page("Market Explorer")
+    p3 = new_page("Market Explorer", "explorer_bg.svg", canvas_svg(
+        "MARKET EXPLORER", "Every mandi, every commodity - slice and search",
+        [],
+        [(16, 88, 220, 96, "COMMODITY"), (16, 196, 220, 96, "COMMODITY GROUP"), (16, 304, 220, 96, "STATE"),
+         (16, 412, 220, 292, "PRICE TREND"), (252, 88, 504, 296, "TOP 10 MARKETS BY AVG PRICE"),
+         (772, 88, 492, 296, "MIN VS MAX PRICE BY COMMODITY"), (252, 396, 1012, 308, "ALL MARKET PRICES")]))
     v = [
-        slicer(DC, "Commodity", "Commodity", 16, 16, 220, 110),
-        slicer(DC, "Commodity Group", "Commodity Group", 16, 142, 220, 110),
-        slicer(MP, "State", "State", 16, 268, 220, 110),
-        donut("Price Trend (week-on-week)", LP, "Trend",
-              [("measure", "Markets Reporting")], 16, 394, 220, 310),
-        bar_chart("Top 10 Markets by Avg Market Price", MP, "Market",
-                  [("measure", "Avg Market Price")], 252, 16, 504, 250,
-                  sort=sort_by(MP, "measure", "Avg Market Price"),
+        slicer(DC, "Commodity", 24, 120),
+        slicer(DC, "Commodity Group", 24, 228),
+        slicer(MP, "State", 24, 336),
+        donut(None, LP, "Trend", [("measure", "Markets Reporting")], 24, 444, 204, 252),
+        bar_chart(None, MP, "Market", [("measure", "Avg Market Price")],
+                  260, 120, 488, 256, sort=sort_by(MP, "measure", "Avg Market Price"),
                   filter_config=[topn_filter(MP, "Market", "Avg Market Price", 10)]),
-        column_chart("Min vs Max Market Price by Commodity", MP, "Commodity",
+        column_chart(None, MP, "Commodity",
                      [("measure", "Min Market Price"), ("measure", "Max Market Price")],
-                     772, 16, 492, 250, labels=False),
-        table("All Market Prices", [
+                     780, 120, 476, 256, labels=False),
+        table(None, [
             (MP, "State", "column"),
             (MP, "District", "column"),
             (MP, "Market", "column"),
@@ -909,35 +842,40 @@ def build_pages():
             (MP, "Max Market Price", "measure"),
             (LP, "Latest Avg Price", "measure"),
             (LP, "Median Deviation %", "measure"),
-        ], 252, 282, 1012, 422),
+        ], 260, 428, 996, 268),
     ]
     pages.append((p3, "Market Explorer", v))
 
     # ---------------- Page 4: Rainfall ----------------
-    p4 = new_page("Rainfall")
+    p4 = new_page("Rainfall", "rainfall_bg.svg", canvas_svg(
+        "RAINFALL MONITOR", "District-level rainfall against long-term normals",
+        [(16, 88, "ACTUAL RAINFALL"), (262, 88, "NORMAL RAINFALL"), (508, 88, "DEPARTURE"),
+         (754, 88, "DISTRICTS MONITORED")],
+        [(1000, 88, 264, 112, "FILTER BY STATE"),
+         (16, 214, 812, 240, "DAILY RAINFALL - ACTUAL VS NORMAL"), (844, 214, 420, 240, "DISTRICT-DAYS BY CATEGORY"),
+         (16, 466, 624, 238, "MONTHLY RAINFALL VS NORMAL"), (656, 466, 608, 238, "ACTUAL RAINFALL BY STATE")]))
     v = [
-        svg_card_visual("P4_Actual_KPI", DR, 16, 16),
-        svg_card_visual("P4_Normal_KPI", DR, 262, 16),
-        svg_card_visual("P4_Departure_KPI", DR, 508, 16),
-        svg_card_visual("P4_Districts_KPI", DR, 754, 16),
-        slicer(DD, "State", "State", 1000, 16, 264, 110),
-        line_chart("Daily Rainfall - Actual vs Normal", DR, "Date",
+        card(DR, "Total Actual Rainfall", 24, 124),
+        card(DR, "Total Normal Rainfall", 270, 124),
+        card(DR, "Rainfall Departure %", 516, 124),
+        card(DD, "Districts Monitored", 762, 124),
+        slicer(DD, "State", 1008, 120, 248, 68),
+        line_chart(None, DR, "Date",
                    [("measure", "Total Actual Rainfall"), ("measure", "Total Normal Rainfall")],
-                   16, 142, 812, 270),
-        donut("District-Days by Rainfall Category", DR, "Category Name",
-              [("measure", "Days Count")], 844, 142, 420, 270),
-        column_chart("Monthly Rainfall vs Normal", MR, "Month Name",
+                   24, 246, 796, 200),
+        donut(None, DR, "Category Name", [("measure", "Days Count")], 852, 246, 404, 200),
+        column_chart(None, MR, "Month Name",
                      [("measure", "Monthly Rainfall Total"), ("measure", "Monthly Normal Total")],
-                     16, 428, 624, 276, labels=True),
-        bar_chart("Actual Rainfall by State", DD, "State",
-                  [("measure", "Total Actual Rainfall")], 656, 428, 608, 276, y_entity=DR,
+                     24, 498, 608, 198, labels=True),
+        bar_chart(None, DD, "State", [("measure", "Total Actual Rainfall")],
+                  664, 498, 592, 198, y_entity=DR,
                   sort=sort_by(DR, "measure", "Total Actual Rainfall")),
     ]
     pages.append((p4, "Rainfall", v))
 
     # ---------------- write ----------------
     pages_dir = os.path.join(REP, "definition", "pages")
-    for pid, display, visuals in pages:
+    for idx, (pid, display, visuals) in enumerate(pages):
         pdir = os.path.join(pages_dir, pid)
         page_json = {
             "$schema": SCHEMA_PAGE,
@@ -946,18 +884,32 @@ def build_pages():
             "displayOption": "FitToPage",
             "height": 720,
             "width": 1280,
+            "objects": {"background": [{
+                "properties": {
+                    "transparency": {"expr": {"Literal": {"Value": "0D"}}},
+                    "color": {"solid": {"color": {"expr": {"Literal": {"Value": "'#F2EFE6'"}}}}},
+                    "image": {"image": {
+                        "name": {"expr": {"Literal": {"Value": "'%s'" % CANVASES[idx][0]}}},
+                        "url": {"expr": {"ResourcePackageItem": {"PackageName": "RegisteredResources",
+                                                                 "PackageType": 1,
+                                                                 "ItemName": CANVASES[idx][0]}}},
+                        "scaling": {"expr": {"Literal": {"Value": "'Fill'"}}},
+                    }},
+                }
+            }]},
         }
         write_json(os.path.join(pdir, "page.json"), page_json)
         for vis in visuals:
             VISUALS_BY_PAGE.setdefault(pid, []).append(vis)
             vid = vis["name"]
             write_json(os.path.join(pdir, "visuals", vid, "visual.json"), vis)
+    pages_json["pageOrder"] = page_order
     pages_json["activePageName"] = page_order[0]
     write_json(os.path.join(pages_dir, "pages.json"), pages_json)
 
 
 THEME_JSON = {
-    "name": "MandiPremium.json",
+    "name": "MandiPremiumV2.json",
     "dataColors": ["#E3120B", "#0098A6", "#FFD700", "#2C2C2C", "#8A8B8C", "#005F83", "#B51D60", "#FDBF11"],
     "background": "#FFFFFF",
     "foreground": "#2C2C2C",
@@ -971,13 +923,12 @@ THEME_JSON = {
     },
     "visualStyles": {
         "page": {"*": {
-            "background": [{"color": {"solid": {"color": "#F6F3EC"}}, "transparency": 0}],
-            "outspace": [{"color": {"solid": {"color": "#EAE4D5"}}}],
+            "background": [{"color": {"solid": {"color": "#F2EFE6"}}, "transparency": 0}],
+            "outspace": [{"color": {"solid": {"color": "#E4DECF"}}}],
         }},
         "*": {"*": {
-            "background": [{"color": {"solid": {"color": "#FFFFFF"}}, "transparency": 0}],
-            "border": [{"show": True, "color": {"solid": {"color": "#E4DFD2"}}, "radius": 8}],
-            "title": [{"fontColor": {"solid": {"color": "#17202B"}}, "fontSize": 12, "fontFamily": "Segoe UI Semibold", "alignment": "left"}],
+            "background": [{"color": {"solid": {"color": "#FFFFFF"}}, "transparency": 100}],
+            "visualHeader": [{"transparency": 100}],
         }},
         "tableEx": {"*": {
             "columnHeaders": [{"fontColor": {"solid": {"color": "#FFFFFF"}}, "backColor": {"solid": {"color": "#1B2A38"}}, "fontSize": 10}],
@@ -987,8 +938,11 @@ THEME_JSON = {
 
 
 def build_report_root():
-    write_utf8(os.path.join(REP, "StaticResources", "RegisteredResources", "MandiPremium.json"),
+    # theme (v2 filename to defeat Desktop's theme cache) + page canvas SVGs
+    write_utf8(os.path.join(REP, "StaticResources", "RegisteredResources", "MandiPremiumV2.json"),
                json.dumps(THEME_JSON, indent=2, ensure_ascii=False))
+    for svg_name, svg in CANVASES:
+        write_utf8(os.path.join(REP, "StaticResources", "RegisteredResources", svg_name), svg)
     report = {
         "$schema": SCHEMA_REPORT,
         "themeCollection": {
@@ -998,7 +952,7 @@ def build_report_root():
                 "type": "SharedResources",
             },
             "customTheme": {
-                "name": "MandiPremium.json",
+                "name": "MandiPremiumV2.json",
                 "reportVersionAtImport": {"visual": "2.9.0", "report": "3.2.0", "page": "2.0.0"},
                 "type": "RegisteredResources",
             },
@@ -1007,7 +961,10 @@ def build_report_root():
             {
                 "name": "RegisteredResources",
                 "type": "RegisteredResources",
-                "items": [{"name": "MandiPremium.json", "path": "MandiPremium.json", "type": "CustomTheme"}],
+                "items": (
+                    [{"name": "MandiPremiumV2.json", "path": "MandiPremiumV2.json", "type": "CustomTheme"}]
+                    + [{"name": name, "path": name, "type": "Image"} for name, _ in CANVASES]
+                ),
             }
         ],
     }
@@ -1042,57 +999,6 @@ def build_report_root():
 # ---------------------------------------------------------------------------
 # CROSS-CHECKS
 # ---------------------------------------------------------------------------
-def simulate_svg_dax(dax: str) -> str:
-    """Evaluate the simple VAR/RETURN/&-concat DAX to the final data URI and validate the SVG XML."""
-    import re as _re
-    import xml.etree.ElementTree as _ET
-    vars = {}
-    ret = None
-    for line in dax.split("\n"):
-        line = line.strip()
-        vm = _re.match(r'VAR (\w+) = "(.*)"$', line)
-        if vm:
-            vars[vm.group(1)] = vm.group(2)
-            continue
-        if line.startswith("RETURN"):
-            ret = line[len("RETURN"):].strip()
-            continue
-        if ret is not None and line:
-            ret += " " + line
-    assert ret is not None, "no RETURN"
-    parts = ret.split("&")
-    out = []
-    for p in parts:
-        p = p.strip()
-        if p.startswith('"') and p.endswith('"'):
-            out.append(p[1:-1])
-        else:
-            vm = _re.match(r"\[?(\w+)\]?$", p)
-            assert vm, f"unparsable token {p[:40]}"
-            tok = vm.group(1)
-            if tok == "_Value":
-                out.append("1,234")  # dynamic FORMAT result - placeholder for XML validation
-            else:
-                assert tok in vars, f"unknown token {p[:40]}"
-                out.append(vars[tok])
-    uri = "".join(out)
-    assert uri.startswith("data:image/svg+xml;charset=utf-8,"), "bad prefix"
-    svg = uri.split(",", 1)[1].replace("%23", "#").replace("%25", "%")
-    _ET.fromstring(svg)  # raises on malformed XML
-    return uri
-
-
-def check_all_svg_measures() -> None:
-    import xml.etree.ElementTree as _ET
-    for t in TABLES:
-        for m in t["measures"]:
-            if len(m) > 4 and m[4] == "ImageUrl":
-                try:
-                    simulate_svg_dax(m[1])
-                except Exception as e:
-                    raise SystemExit(f"SVG MEASURE INVALID: {t['name']}.{m[0]} -> {e}")
-
-
 def cross_checks() -> list:
     errors = []
     # visual fields must exist in model
@@ -1147,7 +1053,6 @@ def main() -> None:
     build_model()
     build_pages()
     build_report_root()
-    check_all_svg_measures()
     errors = cross_checks()
     if errors:
         print("CROSS-CHECK ERRORS:")

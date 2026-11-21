@@ -11,7 +11,7 @@
       "type": "SharedResources"
     },
     "customTheme": {
-      "name": "MandiPremium.json",
+      "name": "MandiPremiumV2.json",
       "reportVersionAtImport": {
         "visual": "2.9.0",
         "report": "3.2.0",
@@ -26,9 +26,29 @@
       "type": "RegisteredResources",
       "items": [
         {
-          "name": "MandiPremium.json",
-          "path": "MandiPremium.json",
+          "name": "MandiPremiumV2.json",
+          "path": "MandiPremiumV2.json",
           "type": "CustomTheme"
+        },
+        {
+          "name": "overview_bg.svg",
+          "path": "overview_bg.svg",
+          "type": "Image"
+        },
+        {
+          "name": "mspbp_bg.svg",
+          "path": "mspbp_bg.svg",
+          "type": "Image"
+        },
+        {
+          "name": "explorer_bg.svg",
+          "path": "explorer_bg.svg",
+          "type": "Image"
+        },
+        {
+          "name": "rainfall_bg.svg",
+          "path": "rainfall_bg.svg",
+          "type": "Image"
         }
       ]
     }

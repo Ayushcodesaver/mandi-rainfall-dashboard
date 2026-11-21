@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "ccfe8d3e63573a9c3f267f0be4e7149d",
   "position": {
-    "x": 772,
-    "y": 16,
+    "x": 780,
+    "y": 120,
     "z": 0,
-    "width": 492,
-    "height": 250,
+    "width": 476,
+    "height": 256,
     "tabOrder": 0
   },
   "visual": {
@@ -115,14 +115,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Min vs Max Market Price by Commodity'"
+                  "Value": "false"
                 }
               }
             }

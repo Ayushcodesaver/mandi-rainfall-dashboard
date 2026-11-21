@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "e6f5eeed50678761baa2cf5b72a103e8",
   "position": {
-    "x": 252,
-    "y": 282,
+    "x": 260,
+    "y": 428,
     "z": 0,
-    "width": 1012,
-    "height": 422,
+    "width": 996,
+    "height": 268,
     "tabOrder": 0
   },
   "visual": {
@@ -188,14 +188,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'All Market Prices'"
+                  "Value": "false"
                 }
               }
             }

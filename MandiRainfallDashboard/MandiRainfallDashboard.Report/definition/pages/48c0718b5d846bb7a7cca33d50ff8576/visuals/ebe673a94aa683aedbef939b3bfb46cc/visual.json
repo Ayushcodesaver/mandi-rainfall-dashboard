@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "ebe673a94aa683aedbef939b3bfb46cc",
   "position": {
-    "x": 16,
-    "y": 142,
+    "x": 24,
+    "y": 246,
     "z": 0,
-    "width": 812,
-    "height": 270,
+    "width": 796,
+    "height": 200,
     "tabOrder": 0
   },
   "visual": {
@@ -149,14 +149,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Market Price vs MSP by Commodity'"
+                  "Value": "false"
                 }
               }
             }
